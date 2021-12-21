@@ -129,10 +129,14 @@ function gridSquareGenerator(className, i) {
 function addActiveClass(difficulty) {
     this.classList.add("active");
     points++;
+
     if (points == difficultyPointsCalc(difficulty)) {
         endGame("win");
     }
     console.log(points);
+
+    //Rimuove l'EventListener per impedire punti infiniti
+    this.removeEventListener("click", addActiveClass);
 }
 
 function difficultyPointsCalc(difficulty) {
@@ -151,6 +155,9 @@ function difficultyPointsCalc(difficulty) {
 function addBombClass() {
     this.classList.add("bomb");
     endGame("lose");
+
+    //Rimuove l'EventListener
+    this.removeEventListener("click", addBombClass);
 }
 
 function endGame(outcome) {
