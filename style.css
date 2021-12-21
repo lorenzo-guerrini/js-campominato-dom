@@ -145,3 +145,8 @@ footer {
 .hidden {
     display: none;
 }
+
+.inactive {
+    pointer-events: none;
+    cursor: default;
+}

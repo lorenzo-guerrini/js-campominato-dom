@@ -151,7 +151,7 @@ function difficultyPointsCalc(difficulty) {
     return 33;
 }
 
-//Aggiumge la classe "bomb" ad un elemento
+//Per ggiumgere la classe "bomb" ad un elemento
 function addBombClass() {
     this.classList.add("bomb");
     endGame("lose");
@@ -161,6 +161,11 @@ function addBombClass() {
 }
 
 function endGame(outcome) {
+    //TODO: Rendere globale grid
+    const grid = document.getElementById("grid");
+    grid.classList.add("inactive");
+    
+    //Variabili varie
     const gameEndElement = document.getElementById("game-end");
     gameEndElement.classList.remove("hidden");
     gameEndElement.classList.add("show");
@@ -169,6 +174,7 @@ function endGame(outcome) {
 
     let outcomeContainer = document.getElementById("game-outcome");
     
+    //Gestisce l'outcome
     if (outcome == "win") {
         outcomeContainer.innerHTML = "Complimenti, ha vinto :-)";
     } else {
