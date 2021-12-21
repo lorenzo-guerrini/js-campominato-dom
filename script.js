@@ -8,6 +8,7 @@ const grid = document.getElementById("grid");
 
 //Punti 
 let points;
+let minPointsToWin;
 
 //Start
 function start() {
@@ -51,10 +52,13 @@ function animationManager() {
 function difficultyManager(difficulty) {
     if (difficulty == 1) {
         gridGenerator(100, "easy"); //Easy
+        minPointsToWin = 84;
     } else if (difficulty == 2) {
         gridGenerator(81, "medium"); //Medium
+        minPointsToWin = 65;
     } else {
         gridGenerator(49, "hard"); //Hard
+        minPointsToWin = 33;
     }
 }
 
@@ -135,25 +139,13 @@ function addActiveClass() {
     this.classList.add("active");
     points++;
 
-    // if (points == difficultyPointsCalc(difficultyName)) {
-    //     endGame("win");
-    // }
-    // console.log(points);
+    if (points == minPointsToWin) {
+        endGame("win");
+    }
+    console.log(points);
 
     //Rimuove l'EventListener per impedire punti infiniti
-    // this.removeEventListener("click", addActiveClass);
-}
-
-function difficultyPointsCalc(difficultyName) {
-    if (difficultyName == "easy") {
-        return 84;
-    }
-
-    if (difficultyName == "medium") {
-        return 65;
-    }
-
-    return 33;
+    this.removeEventListener("click", addActiveClass);
 }
 
 //Per ggiumgere la classe "bomb" ad un elemento
