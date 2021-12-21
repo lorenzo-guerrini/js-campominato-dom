@@ -79,3 +79,30 @@ function gridSquareGenerator(className, i) {
 function addActiveClass() {
     this.classList.add("active");
 }
+
+//Generatore di array di bombe
+function bombGenerator(min, max) {
+    const bombs = [];
+    do {
+        let newBomb = randomNumberGen(min, max);
+        let isBomb = false;
+        for (let i = 0; i < bombs.length; i++) {
+            if (bombs[i] == newBomb) {
+                isBomb == true;
+            }
+        }
+
+        if (!isBomb) {
+            bombs.push(newBomb);
+        }
+    } while (bombs.length < 16)
+
+    return bombs;
+}
+
+//Generatore di numeri random
+function randomNumberGen(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+console.log(bombGenerator(1, 49))
