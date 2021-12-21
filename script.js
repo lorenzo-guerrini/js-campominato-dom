@@ -1,7 +1,10 @@
 //Pulsante Play e contatore partite
 const play = document.getElementById("play");
 play.addEventListener("click", start);
-let playCounter = 1;
+let playCounter = 0;
+
+//Punti 
+let points;
 
 //Start
 function start() {
@@ -10,9 +13,17 @@ function start() {
     const difficultySelector = document.getElementById("difficulty-selector");
     const difficulty = difficultySelector.value;
 
-    if (playCounter == 1) {
+    if (playCounter == 0) {
         grid.classList.add("started");
     }
+
+    //Rimuove messaggio in basso di fine partita se presente
+    const gameEndElement = document.getElementById("game-end");
+    gameEndElement.classList.remove("show");
+    gameEndElement.classList.add("hidden");
+
+    //Azzera i punti
+    points = 0;
 
     //Funzioni da eseguire
     animationManager(grid);
@@ -117,6 +128,7 @@ function gridSquareGenerator(className, i) {
 //Aggiunge la classe "active" ad un elemento
 function addActiveClass() {
     this.classList.add("active");
+    points++;
 }
 
 //Aggiumge la classe "bomb" ad un elemento
@@ -126,11 +138,11 @@ function addBombClass() {
 }
 
 function endGame() {
-    gameEndElement = document.getElementById("game-end");
+    const gameEndElement = document.getElementById("game-end");
     gameEndElement.classList.remove("hidden");
     gameEndElement.classList.add("show");
 
     document.getElementById("n-match").innerHTML = "Partita " + playCounter + ": ";
     document.getElementById("game-outcome").innerHTML = "Peccato, hai perso :-(";
-    document.getElementById("game-total-points").innerHTML = "Hai fatto: x punti";
+    document.getElementById("game-total-points").innerHTML = "Hai fatto: " + points + " punti.";
 }
