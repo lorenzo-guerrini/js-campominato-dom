@@ -52,11 +52,12 @@ header section {
 /* Main */
 main {
     height: calc(100vh - 75px);
-    min-height: 280px;
+    min-height: 370px;
     background-color: #7FFFD4;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #grid {
@@ -117,6 +118,13 @@ main {
     transform: translate(-50%, -50%);
 }
 
+#game-end {
+    text-align: center;
+    font-size: 11px;
+    position: absolute;
+    bottom: 15px;
+}
+
 /* Footer */
 footer {
     display: flex;
@@ -124,4 +132,8 @@ footer {
     margin-left: 10px;
     font-size: 11px;
     height: 30px;
+}
+
+#n-match {
+    font-weight: bold;
 }

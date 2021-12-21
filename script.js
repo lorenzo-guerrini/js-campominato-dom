@@ -1,7 +1,7 @@
 //Pulsante Play e contatore partite
 const play = document.getElementById("play");
 play.addEventListener("click", start);
-let playCounter = 0;
+let playCounter = 1;
 
 //Start
 function start() {
@@ -10,7 +10,7 @@ function start() {
     const difficultySelector = document.getElementById("difficulty-selector");
     const difficulty = difficultySelector.value;
 
-    if (playCounter == 0) {
+    if (playCounter == 1) {
         grid.classList.add("started");
     }
 
@@ -121,4 +121,8 @@ function addActiveClass() {
 //Aggiumge la classe "bomb" ad un elemento
 function addBombClass() {
     this.classList.add("bomb");
+}
+
+function endGame() {
+    
 }

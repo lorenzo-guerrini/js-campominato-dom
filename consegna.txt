@@ -8,7 +8,7 @@ con difficoltà 3 => tra 1 e 49
 - FATTO
 
 Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
-I numeri nella lista delle bombe non possono essere duplicati.
+I numeri nella lista delle bombe non possono essere duplicati. - FATTO
 
 In seguito l’utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina, altrimenti la cella cliccata si colora di azzurro e l’utente può continuare a cliccare sulle altre celle.
 
