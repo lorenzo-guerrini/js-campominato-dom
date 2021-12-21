@@ -105,6 +105,10 @@ main {
     background-color: #6495ED;
 }
 
+.grid-square.bomb {
+    background-color: #DC143C;
+}
+
 .grid-number {
     font-size: 11px;
     position: absolute;

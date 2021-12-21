@@ -47,16 +47,63 @@ function gridGenerator(grid, gridTotal, className) {
     //Svuota la griglia
     grid.innerHTML = "";
 
+    //Genera array di bombe
+    const bombsArray = bombGenerator(gridTotal);
+    console.log(bombsArray);
+
     for (let i = 1; i <= gridTotal; i++) {
         //Genera gridSquare
         let gridSquare = gridSquareGenerator(className, i);
 
-        //Aggiunge eventListener al click
-        gridSquare.addEventListener("click", addActiveClass);
-
+        //Aggiunge eventListener al click in basa a se è una bomba o no
+        if (isBomb(bombsArray, i)) {
+            gridSquare.addEventListener("click", addBombClass);
+            console.log("a")
+        } else {
+            gridSquare.addEventListener("click", addActiveClass);
+        }
+        
         //Aggiunge gridSquare alla griglia
         grid.append(gridSquare);
     }
+}
+
+//Generatore di array di bombe
+function bombGenerator(gridTotal) {
+    const bombs = [];
+    do {
+        let newBomb = randomNumberGen(1, gridTotal);
+        let isBomb = false;
+
+        for (let i = 0; i < bombs.length; i++) {
+            if (bombs[i] == newBomb) {
+                isBomb == true;
+            }
+        }
+
+        if (!isBomb) {
+            bombs.push(newBomb);
+        }
+
+    } while (bombs.length < 16)
+
+    return bombs;
+}
+
+//Generatore di numeri random
+function randomNumberGen(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+//Controlla se un elemento è una bomba o no
+function isBomb (bombsArray, value) {
+    for (let p = 0; p < bombsArray.length; p++) {
+        if (bombsArray[p] == value) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 //Generatore di gridSquare
@@ -80,31 +127,7 @@ function addActiveClass() {
     this.classList.add("active");
 }
 
-//Generatore di array di bombe
-function bombGenerator(min, max) {
-    const bombs = [];
-    do {
-        let newBomb = randomNumberGen(min, max);
-        let isBomb = false;
-
-        for (let i = 0; i < bombs.length; i++) {
-            if (bombs[i] == newBomb) {
-                isBomb == true;
-            }
-        }
-
-        if (!isBomb) {
-            bombs.push(newBomb);
-        }
-
-    } while (bombs.length < 16)
-
-    return bombs;
+//Aggiumge la classe "bomb" ad un elemento
+function addBombClass() {
+    this.classList.add("bomb");
 }
-
-//Generatore di numeri random
-function randomNumberGen(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-console.log(bombGenerator(1, 49))
