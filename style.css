@@ -81,32 +81,32 @@ main {
     transform: translate(-50%, -50%);
 }
 
-.grid-square {
+[class^="grid-square-"] {
     border: 1px solid black;
     position: relative;
     cursor: pointer;
 }
 
-.grid-square.easy {
+[class^="grid-square-"].easy {
     width: calc(100% / 10);
     height: calc(100% / 10);
 }
 
-.grid-square.medium {
+[class^="grid-square-"].medium {
     width: calc(100% / 9);
     height: calc(100% / 9);
 }
 
-.grid-square.hard {
+[class^="grid-square-"].hard {
     width: calc(100% / 7);
     height: calc(100% / 7);
 }
 
-.grid-square.active {
+[class^="grid-square-"].active {
     background-color: #6495ED;
 }
 
-.grid-square.bomb {
+[class^="grid-square-"].bomb {
     background-color: #DC143C;
 }
 

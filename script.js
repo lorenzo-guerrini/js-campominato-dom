@@ -3,8 +3,10 @@ const play = document.getElementById("play");
 play.addEventListener("click", start);
 let playCounter = 0;
 
-//Variabile griglia
+//Variabile griglia, dimensione griglia e array bombe
 const grid = document.getElementById("grid");
+let gridDim = 0;
+let bombsArray = [];
 
 //Punti 
 let points;
@@ -48,35 +50,37 @@ function animationManager() {
     });
 }
 
-//Gestore dlle difficoltà
+//Gestore delle difficoltà
 function difficultyManager(difficulty) {
-    if (difficulty == 1) {
-        gridGenerator(100, "easy"); //Easy
+    if (difficulty == 1) { //Easy
+        gridDim = 100;
         minPointsToWin = 84;
-    } else if (difficulty == 2) {
-        gridGenerator(81, "medium"); //Medium
+        gridGenerator("easy");
+    } else if (difficulty == 2) { //Medium
+        gridDim = 81;
         minPointsToWin = 65;
-    } else {
-        gridGenerator(49, "hard"); //Hard
+        gridGenerator("medium");
+    } else { //Hard
+        gridDim = 49;
         minPointsToWin = 33;
+        gridGenerator("hard");
     }
 }
 
 //Genera la griglia con ciascun elemento
-function gridGenerator(gridTotal, difficultyName) {
+function gridGenerator(difficultyName) {
     //Svuota la griglia
     grid.innerHTML = "";
-
     //Genera array di bombe
-    const bombsArray = bombGenerator(gridTotal);
+    bombsArray = bombGenerator();
     console.log(bombsArray);
 
-    for (let i = 1; i <= gridTotal; i++) {
+    for (let i = 1; i <= gridDim; i++) {
         //Genera gridSquare
         let gridSquare = gridSquareGenerator(difficultyName, i);
 
         //Aggiunge eventListener al click in basa a se è una bomba o no
-        if (isBomb(bombsArray, i)) {
+        if (isBomb(i)) {
             gridSquare.addEventListener("click", addBombClass);
         } else {
             gridSquare.addEventListener("click", addActiveClass);
@@ -88,12 +92,12 @@ function gridGenerator(gridTotal, difficultyName) {
 }
 
 //Generatore di array di bombe
-function bombGenerator(gridTotal) {
-    const bombs = [];
+function bombGenerator() {
+    let bombs = [];
     do {
-        let newBomb = randomNumberGen(1, gridTotal);
+        let newBomb = randomNumberGen(1, gridDim);
 
-        if (!isBomb(bombs, newBomb)) {
+        if (!isBomb(newBomb)) {
             bombs.push(newBomb);
         }
 
@@ -108,13 +112,12 @@ function randomNumberGen(min, max) {
 }
 
 //Controlla se un elemento è una bomba o no
-function isBomb(bombsArray, value) {
-    for (let p = 0; p < bombsArray.length; p++) {
-        if (bombsArray[p] == value) {
+function isBomb(value) {
+    for (let i = 0; i < bombsArray.length; i++) {
+        if (bombsArray[i] == value) {
             return true;
         }
     }
-
     return false;
 }
 
@@ -122,7 +125,7 @@ function isBomb(bombsArray, value) {
 function gridSquareGenerator(difficultyName, i) {
     //Crea gridSquare
     let gridSquare = document.createElement("div");
-    gridSquare.classList.add("grid-square");
+    gridSquare.classList.add("grid-square-" + i);
     gridSquare.classList.add(difficultyName);
 
     //Inserisce numero dentro gridSquare
@@ -169,7 +172,7 @@ function endGame(outcome) {
     document.getElementById("n-match").innerHTML = "Partita " + playCounter + ": ";
 
     let outcomeContainer = document.getElementById("game-outcome");
-    
+
     //Gestisce l'outcome
     if (outcome == "win") {
         outcomeContainer.innerHTML = "Complimenti, ha vinto :-)";
@@ -178,8 +181,18 @@ function endGame(outcome) {
     }
 
     document.getElementById("game-total-points").innerHTML = "Hai fatto: " + points + " punti.";
+
+    //Rivela le bombe
+    bombsReveal()
 }
 
+//Rivelatore di bombe
 function bombsReveal() {
+    for (let i = 1; i <= gridDim; i++) {
+        let tempGridSquare = document.querySelector(".grid-square-" + i);
 
+        if (isBomb(i)) {
+            tempGridSquare.classList.add("bomb");
+        }
+    }
 }
