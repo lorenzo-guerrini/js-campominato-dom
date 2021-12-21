@@ -3,13 +3,15 @@ const play = document.getElementById("play");
 play.addEventListener("click", start);
 let playCounter = 0;
 
+//Variabile griglia
+const grid = document.getElementById("grid");
+
 //Punti 
 let points;
 
 //Start
 function start() {
     //Variabili griglia e difficulty selector
-    const grid = document.getElementById("grid");
     const difficultySelector = document.getElementById("difficulty-selector");
     const difficulty = difficultySelector.value;
 
@@ -26,14 +28,17 @@ function start() {
     points = 0;
 
     //Funzioni da eseguire
-    animationManager(grid);
-    difficultyManager(grid, difficulty);
+    animationManager();
+    difficultyManager(difficulty);
+
+    //Toglie il blocco alla griglia, se presente
+    grid.classList.remove("inactive");
 
     playCounter++;
 }
 
 //Gestore delle animazioni
-function animationManager(grid) {
+function animationManager() {
     grid.animate([
         { transform: 'rotate(0deg)' },
         { transform: 'rotate(360deg)' }
@@ -43,18 +48,18 @@ function animationManager(grid) {
 }
 
 //Gestore dlle difficoltà
-function difficultyManager(grid, difficulty) {
+function difficultyManager(difficulty) {
     if (difficulty == 1) {
-        gridGenerator(grid, 100, "easy"); //Easy
+        gridGenerator(100, "easy"); //Easy
     } else if (difficulty == 2) {
-        gridGenerator(grid, 81, "medium"); //Medium
+        gridGenerator(81, "medium"); //Medium
     } else {
-        gridGenerator(grid, 49, "hard"); //Hard
+        gridGenerator(49, "hard"); //Hard
     }
 }
 
 //Genera la griglia con ciascun elemento
-function gridGenerator(grid, gridTotal, className) {
+function gridGenerator(gridTotal, difficultyName) {
     //Svuota la griglia
     grid.innerHTML = "";
 
@@ -64,7 +69,7 @@ function gridGenerator(grid, gridTotal, className) {
 
     for (let i = 1; i <= gridTotal; i++) {
         //Genera gridSquare
-        let gridSquare = gridSquareGenerator(className, i);
+        let gridSquare = gridSquareGenerator(difficultyName, i);
 
         //Aggiunge eventListener al click in basa a se è una bomba o no
         if (isBomb(bombsArray, i)) {
@@ -110,11 +115,11 @@ function isBomb(bombsArray, value) {
 }
 
 //Generatore di gridSquare
-function gridSquareGenerator(className, i) {
+function gridSquareGenerator(difficultyName, i) {
     //Crea gridSquare
     let gridSquare = document.createElement("div");
     gridSquare.classList.add("grid-square");
-    gridSquare.classList.add(className);
+    gridSquare.classList.add(difficultyName);
 
     //Inserisce numero dentro gridSquare
     let gridSquareNumber = document.createElement("div");
@@ -126,25 +131,25 @@ function gridSquareGenerator(className, i) {
 }
 
 //Aggiunge la classe "active" ad un elemento
-function addActiveClass(difficulty) {
+function addActiveClass() {
     this.classList.add("active");
     points++;
 
-    if (points == difficultyPointsCalc(difficulty)) {
-        endGame("win");
-    }
-    console.log(points);
+    // if (points == difficultyPointsCalc(difficultyName)) {
+    //     endGame("win");
+    // }
+    // console.log(points);
 
     //Rimuove l'EventListener per impedire punti infiniti
-    this.removeEventListener("click", addActiveClass);
+    // this.removeEventListener("click", addActiveClass);
 }
 
-function difficultyPointsCalc(difficulty) {
-    if (difficulty == "easy") {
+function difficultyPointsCalc(difficultyName) {
+    if (difficultyName == "easy") {
         return 84;
     }
 
-    if (difficulty == "medium") {
+    if (difficultyName == "medium") {
         return 65;
     }
 
@@ -161,10 +166,9 @@ function addBombClass() {
 }
 
 function endGame(outcome) {
-    //TODO: Rendere globale grid
-    const grid = document.getElementById("grid");
+    //Impedisce di cliccare altro sulla griglia
     grid.classList.add("inactive");
-    
+
     //Variabili varie
     const gameEndElement = document.getElementById("game-end");
     gameEndElement.classList.remove("hidden");
@@ -182,4 +186,8 @@ function endGame(outcome) {
     }
 
     document.getElementById("game-total-points").innerHTML = "Hai fatto: " + points + " punti.";
+}
+
+function bombsReveal() {
+
 }
