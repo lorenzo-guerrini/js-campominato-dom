@@ -126,23 +126,47 @@ function gridSquareGenerator(className, i) {
 }
 
 //Aggiunge la classe "active" ad un elemento
-function addActiveClass() {
+function addActiveClass(difficulty) {
     this.classList.add("active");
     points++;
+    if (points == difficultyPointsCalc(difficulty)) {
+        endGame("win");
+    }
+    console.log(points);
+}
+
+function difficultyPointsCalc(difficulty) {
+    if (difficulty == "easy") {
+        return 84;
+    }
+
+    if (difficulty == "medium") {
+        return 65;
+    }
+
+    return 33;
 }
 
 //Aggiumge la classe "bomb" ad un elemento
 function addBombClass() {
     this.classList.add("bomb");
-    endGame();
+    endGame("lose");
 }
 
-function endGame() {
+function endGame(outcome) {
     const gameEndElement = document.getElementById("game-end");
     gameEndElement.classList.remove("hidden");
     gameEndElement.classList.add("show");
 
     document.getElementById("n-match").innerHTML = "Partita " + playCounter + ": ";
-    document.getElementById("game-outcome").innerHTML = "Peccato, hai perso :-(";
+
+    let outcomeContainer = document.getElementById("game-outcome");
+    
+    if (outcome == "win") {
+        outcomeContainer.innerHTML = "Complimenti, ha vinto :-)";
+    } else {
+        outcomeContainer.innerHTML = "Peccato, hai perso :-(";
+    }
+
     document.getElementById("game-total-points").innerHTML = "Hai fatto: " + points + " punti.";
 }
