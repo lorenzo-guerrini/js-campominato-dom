@@ -49,7 +49,6 @@ function gridGenerator(grid, gridTotal, className) {
 
     //Genera array di bombe
     const bombsArray = bombGenerator(gridTotal);
-    console.log(bombsArray);
 
     for (let i = 1; i <= gridTotal; i++) {
         //Genera gridSquare
@@ -58,11 +57,10 @@ function gridGenerator(grid, gridTotal, className) {
         //Aggiunge eventListener al click in basa a se è una bomba o no
         if (isBomb(bombsArray, i)) {
             gridSquare.addEventListener("click", addBombClass);
-            console.log("a")
         } else {
             gridSquare.addEventListener("click", addActiveClass);
         }
-        
+
         //Aggiunge gridSquare alla griglia
         grid.append(gridSquare);
     }
@@ -73,15 +71,8 @@ function bombGenerator(gridTotal) {
     const bombs = [];
     do {
         let newBomb = randomNumberGen(1, gridTotal);
-        let isBomb = false;
 
-        for (let i = 0; i < bombs.length; i++) {
-            if (bombs[i] == newBomb) {
-                isBomb == true;
-            }
-        }
-
-        if (!isBomb) {
+        if (!isBomb(bombs, newBomb)) {
             bombs.push(newBomb);
         }
 
@@ -96,7 +87,7 @@ function randomNumberGen(min, max) {
 }
 
 //Controlla se un elemento è una bomba o no
-function isBomb (bombsArray, value) {
+function isBomb(bombsArray, value) {
     for (let p = 0; p < bombsArray.length; p++) {
         if (bombsArray[p] == value) {
             return true;
