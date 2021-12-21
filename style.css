@@ -137,3 +137,11 @@ footer {
 #n-match {
     font-weight: bold;
 }
+
+.show {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}

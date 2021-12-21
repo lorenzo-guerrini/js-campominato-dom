@@ -49,6 +49,7 @@ function gridGenerator(grid, gridTotal, className) {
 
     //Genera array di bombe
     const bombsArray = bombGenerator(gridTotal);
+    console.log(bombsArray);
 
     for (let i = 1; i <= gridTotal; i++) {
         //Genera gridSquare
@@ -121,8 +122,15 @@ function addActiveClass() {
 //Aggiumge la classe "bomb" ad un elemento
 function addBombClass() {
     this.classList.add("bomb");
+    endGame();
 }
 
 function endGame() {
-    
+    gameEndElement = document.getElementById("game-end");
+    gameEndElement.classList.remove("hidden");
+    gameEndElement.classList.add("show");
+
+    document.getElementById("n-match").innerHTML = "Partita " + playCounter + ": ";
+    document.getElementById("game-outcome").innerHTML = "Peccato, hai perso :-(";
+    document.getElementById("game-total-points").innerHTML = "Hai fatto: x punti";
 }
