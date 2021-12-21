@@ -192,7 +192,11 @@ function bombsReveal() {
         let tempGridSquare = document.querySelector(".grid-square-" + i);
 
         if (isBomb(i)) {
-            tempGridSquare.classList.add("bomb");
+            if (tempGridSquare.classList.contains("bomb")) {
+                continue;
+            }
+
+            tempGridSquare.classList.add("unexploded");
         }
     }
 }

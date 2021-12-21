@@ -110,6 +110,17 @@ main {
     background-color: #DC143C;
 }
 
+[class^="grid-square-"].unexploded {
+    background-color: #DC143C;
+    animation: unexplodedBomb 1s infinite;
+}
+
+@keyframes unexplodedBomb {
+    50% {
+        filter: saturate(300%);
+    }
+}
+
 .grid-number {
     font-size: 11px;
     position: absolute;

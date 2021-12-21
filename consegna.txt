@@ -26,6 +26,7 @@ BONUS:
 - FATTO
 
 2- quando si clicca su una bomba e finisce la partita, il software scopre tutte le bombe nascoste
+- FATTO
 
 Consigli del giorno:
 Scriviamo prima cosa vogliamo fare passo passo in italiano, dividiamo il lavoro in micro problemi.
