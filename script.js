@@ -86,6 +86,7 @@ function bombGenerator(min, max) {
     do {
         let newBomb = randomNumberGen(min, max);
         let isBomb = false;
+
         for (let i = 0; i < bombs.length; i++) {
             if (bombs[i] == newBomb) {
                 isBomb == true;
@@ -95,6 +96,7 @@ function bombGenerator(min, max) {
         if (!isBomb) {
             bombs.push(newBomb);
         }
+
     } while (bombs.length < 16)
 
     return bombs;
