@@ -205,3 +205,6 @@ function bombsReveal() {
         }
     }
 }
+
+//todo: non dare numero alla classe usando array query selector all
+//todo usare una addxClass sola
