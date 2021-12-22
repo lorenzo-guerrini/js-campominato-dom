@@ -18,6 +18,7 @@ function start() {
     const difficultySelector = document.getElementById("difficulty-selector");
     const difficulty = difficultySelector.value;
 
+    //Aggiunge classe "started" alla griglia se è la prima partita
     if (playCounter == 0) {
         grid.classList.add("started");
     }
@@ -71,6 +72,7 @@ function difficultyManager(difficulty) {
 function gridGenerator(difficultyName) {
     //Svuota la griglia
     grid.innerHTML = "";
+
     //Genera array di bombe
     bombsArray = bombGenerator();
     console.log(bombsArray);
@@ -96,11 +98,9 @@ function bombGenerator() {
     let bombs = [];
     do {
         let newBomb = randomNumberGen(1, gridDim);
-
         if (!isBomb(newBomb)) {
             bombs.push(newBomb);
         }
-
     } while (bombs.length < 16)
 
     return bombs;
@@ -164,29 +164,35 @@ function endGame(outcome) {
     //Impedisce di cliccare altro sulla griglia
     grid.classList.add("inactive");
 
-    //Variabili varie
+    //Mostra il div #game-end
     const gameEndElement = document.getElementById("game-end");
     gameEndElement.classList.remove("hidden");
     gameEndElement.classList.add("show");
 
+    //Stampa il numero della partita
     document.getElementById("n-match").innerHTML = "Partita " + playCounter + ": ";
 
-    let outcomeContainer = document.getElementById("game-outcome");
-
     //Gestisce l'outcome
-    if (outcome == "win") {
-        outcomeContainer.innerHTML = "Complimenti, ha vinto :-)";
-    } else {
-        outcomeContainer.innerHTML = "Peccato, hai perso :-(";
-    }
+    let outcomeContainer = document.getElementById("game-outcome");
+    outcomeManager(outcomeContainer, outcome);
 
+    //Stampa il totale dei punti
     document.getElementById("game-total-points").innerHTML = "Hai fatto: " + points + " punti.";
 
     //Rivela le bombe
     bombsReveal()
 }
 
-//Rivelatore di bombe
+//Generatore dell'Outcome
+function outcomeManager(outcomeContainer, outcome) {
+    if (outcome == "win") {
+        outcomeContainer.innerHTML = "Complimenti, ha vinto :-)";
+    } else {
+        outcomeContainer.innerHTML = "Peccato, hai perso :-(";
+    }
+}
+
+//Rivelatore di bombe, controlla se ciascun gridSquare è una bomba e nel caso lo sia e non sia stata cliccata gli da la classe "unexploded"
 function bombsReveal() {
     for (let i = 1; i <= gridDim; i++) {
         let tempGridSquare = document.querySelector(".grid-square-" + i);
