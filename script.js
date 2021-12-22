@@ -75,7 +75,6 @@ function gridGenerator(difficultyName) {
 
     //Genera array di bombe
     bombsArray = bombGenerator();
-    console.log(bombsArray);
 
     for (let i = 1; i <= gridDim; i++) {
         //Genera gridSquare
